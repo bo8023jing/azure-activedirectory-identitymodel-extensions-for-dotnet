@@ -56,7 +56,7 @@ namespace Microsoft.IdentityModel.Xml
         /// <exception cref="ArgumentNullException">if <paramref name="signedInfo"/> if null.</exception>
         public Signature(SignedInfo signedInfo)
         {
-            SignedInfo = signedInfo;
+            SignedInfo = signedInfo ?? throw LogArgumentNullException(nameof(signedInfo));
         }
 
         /// <summary>

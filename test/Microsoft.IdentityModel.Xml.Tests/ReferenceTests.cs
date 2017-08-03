@@ -70,7 +70,7 @@ namespace Microsoft.IdentityModel.Xml.Tests
             var context = new CompareContext($"{this}.Verify, {theoryData.TestId}");
             try
             {
-                theoryData.Reference.Verify(theoryData.ProviderFactory);
+                theoryData.Reference.Verify(theoryData.ProviderFactory, TransformFactory.Default);
                 theoryData.ExpectedException.ProcessNoException(context);
             }
             catch (Exception ex)
