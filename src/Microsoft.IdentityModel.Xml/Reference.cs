@@ -208,7 +208,7 @@ namespace Microsoft.IdentityModel.Xml
                 }
 
                 if (!transformFactory.IsSupportedCanonicalizingTransfrom(Transforms[Transforms.Count - 1]))
-                    throw LogExceptionMessage(new NotSupportedException($"transform not supported: '{Transforms[Transforms.Count - 1]}'."));
+                    throw LogExceptionMessage(new NotSupportedException($"canonicalizing transform not supported: '{Transforms[Transforms.Count - 1]}'."));
 
                 return transformFactory.GetCanonicalizingTransform(Transforms[Transforms.Count - 1]).ProcessAndDigest(TokenStream, hashAlg);
             }

@@ -27,6 +27,7 @@
 
 using System.Collections.Generic;
 using Microsoft.IdentityModel.Tests;
+using Microsoft.IdentityModel.Xml;
 
 namespace Microsoft.IdentityModel.Tokens.Saml.Tests
 {
@@ -75,6 +76,8 @@ namespace Microsoft.IdentityModel.Tokens.Saml.Tests
         public string Token { get; set; }
 
         public TokenValidationParameters ValidationParameters { get; set; }
+
+        public TransformFactory TransformFactory { get; set; }
 
         public override string ToString()
         {

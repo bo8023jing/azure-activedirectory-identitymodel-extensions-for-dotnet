@@ -223,7 +223,10 @@ namespace Microsoft.IdentityModel.Tokens.Saml.Tests
             ClaimsPrincipal retVal = null;
             try
             {
-                retVal = (theoryData.Handler as Saml2SecurityTokenHandler).ValidateToken(theoryData.Token, theoryData.ValidationParameters, out SecurityToken validatedToken);
+                var handler = theoryData.Handler as Saml2SecurityTokenHandler;
+                if (theoryData.TransformFactory != null)
+                    handler.TransformFactory = theoryData.TransformFactory;
+                retVal = handler.ValidateToken(theoryData.Token, theoryData.ValidationParameters, out SecurityToken validatedToken);
                 theoryData.ExpectedException.ProcessNoException();
             }
             catch (Exception ex)
@@ -422,6 +425,51 @@ namespace Microsoft.IdentityModel.Tokens.Saml.Tests
                         ValidationParameters = new TokenValidationParameters
                         {
                             IssuerSigningKey = ReferenceXml.DefaultAADSigningKey,
+                        }
+                    },
+                    new SamlTheoryData
+                    {
+                        ExpectedException = ExpectedException.SecurityTokenInvalidSignatureException("transform not supported"),
+                        Handler = new Saml2SecurityTokenHandler(),
+                        TestId = nameof(ReferenceTransformFactory.TransformFactoryAlwaysUnsupported),
+                        Token = RefrenceTokens.Saml2Token_Valid,
+                        TransformFactory = ReferenceTransformFactory.TransformFactoryAlwaysUnsupported,
+                        ValidationParameters = new TokenValidationParameters
+                        {
+                            IssuerSigningKey = ReferenceXml.DefaultAADSigningKey,
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            ValidateLifetime = false,
+                        }
+                    },
+                    new SamlTheoryData
+                    {
+                        ExpectedException = ExpectedException.SecurityTokenInvalidSignatureException("transform not supported"),
+                        Handler = new Saml2SecurityTokenHandler(),
+                        TestId = nameof(ReferenceTransformFactory.TransformFactoryTransformAlwaysUnsupported),
+                        Token = RefrenceTokens.Saml2Token_Valid,
+                        TransformFactory = ReferenceTransformFactory.TransformFactoryTransformAlwaysUnsupported,
+                        ValidationParameters = new TokenValidationParameters
+                        {
+                            IssuerSigningKey = ReferenceXml.DefaultAADSigningKey,
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            ValidateLifetime = false,
+                        }
+                    },
+                    new SamlTheoryData
+                    {
+                        ExpectedException = ExpectedException.SecurityTokenInvalidSignatureException("canonicalizing transform not supported"),
+                        Handler = new Saml2SecurityTokenHandler(),
+                        TestId = nameof(ReferenceTransformFactory.TransformFactoryCanonicalizingTransformAlwaysUnsupported),
+                        Token = RefrenceTokens.Saml2Token_Valid,
+                        TransformFactory = ReferenceTransformFactory.TransformFactoryCanonicalizingTransformAlwaysUnsupported,
+                        ValidationParameters = new TokenValidationParameters
+                        {
+                            IssuerSigningKey = ReferenceXml.DefaultAADSigningKey,
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            ValidateLifetime = false,
                         }
                     }
                 };
