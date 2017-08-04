@@ -32,7 +32,7 @@ using static Microsoft.IdentityModel.Logging.LogHelper;
 namespace Microsoft.IdentityModel.Tokens.Saml2
 {
     /// <summary>
-    /// Comparison class supporting multi-part keys for a dicitionary
+    /// Comparison class supporting multi-part keys for a dictionary
     /// </summary>
     internal class Saml2AttributeKeyComparer : IEqualityComparer<Saml2AttributeKeyComparer.AttributeKey>
     {

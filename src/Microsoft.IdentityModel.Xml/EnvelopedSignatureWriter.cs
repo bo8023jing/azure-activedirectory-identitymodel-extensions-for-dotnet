@@ -60,9 +60,9 @@ namespace Microsoft.IdentityModel.Xml
         /// <param name="writer">Writer to wrap/</param>
         /// <param name="signingCredentials">SigningCredentials to be used to generate the signature.</param>
         /// <param name="referenceId">The reference Id of the envelope.</param>
-        /// <exception cref="ArgumentNullException">if 'writer' is null.</exception>
-        /// <exception cref="ArgumentNullException">if 'signingCredentials' is null.</exception>
-        /// <exception cref="ArgumentNullException">if 'referenceId' is null or Empty.</exception>
+        /// <exception cref="ArgumentNullException">if <paramref name="writer"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">if <paramref name="signingCredentials"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">if <paramref name="referenceId"/> is null or Empty.</exception>
         public EnvelopedSignatureWriter(XmlWriter writer, SigningCredentials signingCredentials, string referenceId)
         {
             if (writer == null)

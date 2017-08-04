@@ -25,8 +25,8 @@
 //
 //------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using static Microsoft.IdentityModel.Logging.LogHelper;
 
 namespace Microsoft.IdentityModel.Tokens.Saml2
@@ -34,30 +34,34 @@ namespace Microsoft.IdentityModel.Tokens.Saml2
     /// <summary>
     /// Represents the AudienceRestriction element specified in [Saml2Core, 2.5.1.4].
     /// </summary>
-    /// <remarks>
-    /// If the Audiences collection is empty, an InvalidOperationException will be 
-    /// thrown during serialization.
-    /// </remarks>
     public class Saml2AudienceRestriction
     {
         /// <summary>
         /// Creates an instance of Saml2AudienceRestriction.
         /// </summary>
         public Saml2AudienceRestriction()
-        { }
+        {
+            Audiences = new List<string>();
+        }
 
         /// <summary>
         /// Creates an instance of Saml2AudienceRestriction.
         /// </summary>
         /// <param name="audience">The audience element contained in this restriction.</param>
+        /// <exception cref="ArgumentNullException">if <paramref name="audience"/> is null or empty.</exception>
         public Saml2AudienceRestriction(string audience)
-            : this(new string[] { audience })
-        { }
+        {
+            if (string.IsNullOrEmpty(audience))
+                throw LogArgumentNullException(nameof(audience));
+
+            Audiences = new List<string> { audience };
+        }
 
         /// <summary>
         /// Creates an instance of Saml2AudienceRestriction.
         /// </summary>
         /// <param name="audiences">The collection of audience elements contained in this restriction.</param>
+        /// <exception cref="ArgumentNullException">if <paramref name="audiences"/> is null.</exception>
         public Saml2AudienceRestriction(IEnumerable<string> audiences)
         {
             if (audiences == null)
