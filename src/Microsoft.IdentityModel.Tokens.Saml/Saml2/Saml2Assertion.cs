@@ -51,7 +51,6 @@ namespace Microsoft.IdentityModel.Tokens.Saml2
             IssueInstant = DateTime.UtcNow;
             Issuer = issuer;
             Statements = new List<Saml2Statement>();
-            Version = Saml2Constants.Version;
         }
 
         /// <summary>
@@ -155,7 +154,7 @@ namespace Microsoft.IdentityModel.Tokens.Saml2
         /// </summary>
         public string Version
         {
-            get;
+            get => Saml2Constants.Version;
         }
     }
 }

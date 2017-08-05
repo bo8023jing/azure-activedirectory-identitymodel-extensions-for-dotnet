@@ -1012,6 +1012,61 @@ namespace Microsoft.IdentityModel.Tests
             return (label ?? "label") + ": '" + GetString(str1) + "', '" + GetString(str2) + "'";
         }
 
+//        -            // public instance properties
+//-            PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+//-
+//             // Touch each public property
+//-            foreach (PropertyInfo propertyInfo in propertyInfos)
+//+            foreach (var propertyInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+//             {
+//                 var propertyContext = new CompareContext(context);
+//                 try
+//                 {
+//-                    // this is true if type is System.Object, no reason to go lower.
+//-                    if (propertyInfo.PropertyType.BaseType == null)
+//-                        continue;
+//-
+//                     if (type == typeof(Claim) && context.IgnoreSubject && propertyInfo.Name == "Subject")
+//                         continue;
+ 
+//                     if (type == typeof(Signature) && context.IgnoreTokenStreamReader)
+//                         continue;
+//                            public static bool CompareAllPublicProperties(object obj1, object obj2, CompareC
+//                         object val1 = propertyInfo.GetValue(obj1, null);
+//                         object val2 = propertyInfo.GetValue(obj2, null);
+//                         if ((val1 == null) && (val2 == null))
+//                             continue;
+ 
+//-                        if ((val1 == null) || (val2 == null))
+//-                        {
+//+                        if (val1 == null || val2 == null)
+//                             localContext.Diffs.Add(BuildStringDiff(propertyInfo.Name + ": ", val1, val2));
+//-                        }
+//-                        else if (val1 is int || val1 is long || val1 is DateTime || val1 is bool || val1 is double || val1 is System.TimeSpan)
+//+
+//+                        if (propertyInfo.PropertyType.BaseType == typeof(System.ValueType))
+//                         {
+//                             if (!val1.Equals(val2))
+//                                 localContext.Diffs.Add(BuildStringDiff(propertyInfo.Name + ": ", val1, val2));
+//+
+//+                            continue;
+//                         }
+//-                        else
+//-                        {
+//-                            AreEqual(val1, val2, propertyContext);
+//-                            localContext.Merge("propertyInfo.Name: " + propertyInfo.Name, propertyContext);
+//-                        }
+//-                    }
+//+
+//+                        AreEqual(val1, val2, propertyContext);
+//+                        localContext.Merge($"propertyInfo.Name: {propertyInfo.Name}", propertyContext);
+//+                     }
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     localContext.Diffs.Add($"Reflection failed getting 'PropertyInfo: {propertyInfo.Name}'. Exception: '{ex}'.");
+//                 }
+
         public static bool CompareAllPublicProperties(object obj1, object obj2, CompareContext context)
         {
             Type type = obj1.GetType();
